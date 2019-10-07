@@ -27,7 +27,7 @@
         }
     },
     "Resources" : {
-        "bitcoindSecurityGroup" : {
+        "btcwrappSecurityGroup" : {
             "Type" : "AWS::EC2::SecurityGroup",
             "Properties" : {
                 "GroupDescription" : "Allow http, ssh from bastion, and bitcoin traffic",
@@ -68,13 +68,13 @@
                 ]
             }
         },
-        "bitcoindContainerInstances" : {
+        "btcwrappContainerInstances" : {
             "Type" : "AWS::AutoScaling::LaunchConfiguration",
             "Properties" : {
                 "ImageId" : "ami-0fbc9fff39b859770",
                 "SecurityGroups" : [
                     {
-                        "Ref" : "bitcoindSecurityGroup"
+                        "Ref" : "btcwrappSecurityGroup"
                     }
                 ],
                 "InstanceType" : "t2.micro",
@@ -110,7 +110,7 @@
                                 {
                                     "Ref" : "AWS::StackName"
                                 },
-                                "         --resource bitcoindECSAutoScalingGroup ",
+                                "         --resource btcwrappECSAutoScalingGroup ",
                                 "         --region us-east-2\n",
                                 "docker plugin install rexray/ebs REXRAY_PREEMPT=true EBS_REGION=us-east-2 --grant-all-permissions\n"
                             ]
@@ -119,14 +119,14 @@
                 }
             }
         },
-        "bitcoindECSAutoScalingGroup" : {
+        "btcwrappECSAutoScalingGroup" : {
             "Type" : "AWS::AutoScaling::AutoScalingGroup",
             "Properties" : {
                 "VPCZoneIdentifier": {
                     "Ref" : "PrivateSubnetIds"
                 },
                 "LaunchConfigurationName" : {
-                    "Ref" : "bitcoindContainerInstances"
+                    "Ref" : "btcwrappContainerInstances"
                 },
                 "MinSize" : "1",
                 "MaxSize" : "1",
@@ -143,7 +143,7 @@
                 }
             }
         },
-        "bitcoindTaskDefinition" : {
+        "btcwrappTaskDefinition" : {
             "Type" : "AWS::ECS::TaskDefinition",
             "Properties" : {
                 "ExecutionRoleArn" : "arn:aws:iam::139008324031:role/role-task-execution-peanuts",
@@ -260,10 +260,10 @@
                 ]
             }
         },
-        "bitcoindServiceDiscoveryService" : {
+        "btcwrappServiceDiscoveryService" : {
             "Type" : "AWS::ServiceDiscovery::Service",
             "Properties" : {
-                "Description" : "Private bitcoind discovery service",
+                "Description" : "Private btcwrapp discovery service",
                 "DnsConfig" : {
                     "DnsRecords" : [
                         {
@@ -273,20 +273,20 @@
                     ],
                     "RoutingPolicy" : "WEIGHTED"
                 },
-                "Name" : "bitcoind",
+                "Name" : "btcwrapp",
                 "NamespaceId" : {
                     "Ref" : "PrivateDnsNamespaceId"
                 }
             }
         },
-        "bitcoindECSService" : {
+        "btcwrappECSService" : {
             "Type" : "AWS::ECS::Service",
             "Properties" : {
                 "Cluster" : {
                     "Ref" : "ECSClusterName"
                 },
                 "TaskDefinition" : {
-                    "Ref" : "bitcoindTaskDefinition"
+                    "Ref" : "btcwrappTaskDefinition"
                 },
                 "DesiredCount" : 1,
                 "LaunchType" : "EC2",
@@ -297,7 +297,7 @@
                         },
                         "SecurityGroups" : [
                             {
-                                "Ref" : "bitcoindSecurityGroup"
+                                "Ref" : "btcwrappSecurityGroup"
                             }
                         ]
                     }
@@ -306,7 +306,7 @@
                     {
                         "RegistryArn" : {
                             "Fn::GetAtt" : [
-                                "bitcoindServiceDiscoveryService",
+                                "btcwrappServiceDiscoveryService",
                                 "Arn"
                             ]
                         }
@@ -314,7 +314,7 @@
                 ]
             }
         },
-        "bitcoindAutoscalingRole" : {
+        "btcwrappAutoscalingRole" : {
             "Type" : "AWS::IAM::Role",
             "Properties" : {
                 "AssumeRolePolicyDocument" : {
@@ -355,9 +355,9 @@
                 ]
             }
         },
-        "bitcoindScalingTarget" : {
+        "btcwrappScalingTarget" : {
             "Type" : "AWS::ApplicationAutoScaling::ScalableTarget",
-            "DependsOn" : "bitcoindECSService",
+            "DependsOn" : "btcwrappECSService",
             "Properties" : {
                 "MaxCapacity" : 2,
                 "MinCapacity" : 1,
@@ -372,7 +372,7 @@
                             "/",
                             {
                                 "Fn::GetAtt" : [
-                                    "bitcoindECSService",
+                                    "btcwrappECSService",
                                     "Name"
                                 ]
                             }
@@ -381,7 +381,7 @@
                 },
                 "RoleARN" : {
                     "Fn::GetAtt" : [
-                        "bitcoindAutoscalingRole",
+                        "btcwrappAutoscalingRole",
                         "Arn"
                     ]
                 },
