@@ -10,4 +10,4 @@ echo $5
 echo $6
 echo $7
 
-aws cloudformation create-stack --capabilities CAPABILITY_IAM --stack-name=btcwrapp-ecs-stack --template-body file://cloudformation/bitcoin-service.json --parameters ParameterKey=VpcId,ParameterValue=$1 ParameterKey=AllowedSSHCidr,ParameterValue=$2/32 ParameterKey=PublicSubnetIds,ParameterValue=\"$3\" ParameterKey=PrivateSubnetIds,ParameterValue=\"$4\" ParameterKey=PrivateDnsNamespaceId,ParameterValue=$5 ParameterKey=ECSClusterName,ParameterValue=$6 ParameterKey=CloudwatchLogsGroupName,ParameterValue=$7
+aws cloudformation create-stack --capabilities CAPABILITY_IAM --stack-name=btcwrapp-ecs-stack --template-body file://cloudformation/btcwrapp.json --parameters ParameterKey=VpcId,ParameterValue=$1 ParameterKey=AllowedSSHCidr,ParameterValue=$2/32 ParameterKey=PublicSubnetIds,ParameterValue=\"$3\" ParameterKey=PrivateSubnetIds,ParameterValue=\"$4\" ParameterKey=PrivateDnsNamespaceId,ParameterValue=$5 ParameterKey=ECSClusterName,ParameterValue=$6 ParameterKey=CloudwatchLogsGroupName,ParameterValue=$7
