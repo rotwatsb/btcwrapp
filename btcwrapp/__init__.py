@@ -17,8 +17,8 @@ def create_app():
     def hello():
         return 'Hello, World!'
 
-    @app.route('/bitcoin')
-    def bitcoin():
+    @app.route('/blockchain')
+    def get_blockchain_info():
         info = btc.rpc(
             method='getblockchaininfo',
             params=[]
@@ -26,8 +26,15 @@ def create_app():
 
         return info
 
-    @app.route('/bitcoin/best-block')
-    def bestblock():
+    @app.route('/block/<string:block_hash>')
+    def get_block(block_hash):
+        block = btc.rpc(
+            method='getblock',
+            params=[block_hash]
+        )['result']
+
+    @app.route('/block')
+    def get_best_block():
         best_block_hash = btc.rpc(
             method='getblockchaininfo',
             params=[]
