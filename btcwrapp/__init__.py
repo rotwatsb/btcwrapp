@@ -18,7 +18,7 @@ def create_app():
         return 'Hello, World!'
 
     @app.route('/blockchain')
-    def bitcoin():
+    def get_blockchain_info():
         info = btc.rpc(
             method='getblockchaininfo',
             params=[]
