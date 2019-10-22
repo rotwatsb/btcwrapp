@@ -11,7 +11,6 @@ services:
     environment:
       - RPC_USER
       - RPC_PASSWORD
-      - RPC_BITCOIN_HOST
     command: ["bash", "/project/docker/run_tests.sh"]
   bitcoin-service:
     image: "rotwatsb/bitcoin-service:latest"

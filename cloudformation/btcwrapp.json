@@ -183,12 +183,12 @@
                         "ReadonlyRootFilesystem" : false,
                         "Environment" : [
                             {
-                                "Name" : "RPC_BITCOIN_HOST",
-                                "Value" : "localhost"
-                            },
-                            {
                                 "Name" : "FLASK_APP",
                                 "Value" : "btcwrapp"
+                            },
+                            {
+                                "Name" : "ENV",
+                                "Value" : "production"
                             }
                         ],
                         "Secrets" : [

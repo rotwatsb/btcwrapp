@@ -1,0 +1,4 @@
+port: 8000
+bitcoin-service:
+  domain: ""
+  port: 8332

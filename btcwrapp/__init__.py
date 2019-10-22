@@ -5,12 +5,7 @@ from btcwrapp.lib import btc
 def create_app():
     # create and configure the app
     # __name__ is the name of the current Python module
-    # instance_relative_config tells the app that configuration files are relative to the
-    # instance folder
-    app = Flask(__name__, instance_relative_config=True)
-
-    app.config.from_json('config/default.json')
-    app.config.from_json('config/' + app.config['ENV'] + '.json')
+    app = Flask(__name__, instance_relative_config=False)
 
     # a simple page that says hello
     @app.route('/hello')

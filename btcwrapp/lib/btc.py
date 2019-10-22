@@ -1,9 +1,11 @@
 import os, requests
+from config2.config import config
 
 def rpc(method, params):
     response = requests.post(
-        "http://%s:8332"%(
-            os.environ['RPC_BITCOIN_HOST']
+        "http://%s:%s"%(
+            config['bitcoin-service']['domain'],
+            config['bitcoin-service']['port']
         ),
         json = {
             'jsonrpc': '1.0',
