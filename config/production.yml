@@ -1,2 +1,2 @@
-bitcoin-host:
+bitcoin-service:
   domain: "localhost"
