@@ -183,10 +183,6 @@
                         "ReadonlyRootFilesystem" : false,
                         "Environment" : [
                             {
-                                "Name" : "FLASK_APP",
-                                "Value" : "btcwrapp"
-                            },
-                            {
                                 "Name" : "ENV",
                                 "Value" : "production"
                             }
