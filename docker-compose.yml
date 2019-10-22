@@ -6,8 +6,6 @@ services:
       - bitcoin-service
     networks:
       - test-network
-    ports:
-      - "8000:8000"
     environment:
       - RPC_USER
       - RPC_PASSWORD
