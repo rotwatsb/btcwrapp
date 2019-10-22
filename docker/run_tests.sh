@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export PYTHONPATH=/project
-export FLASK_ENV=testing
+export ENV=testing
 
 pipenv install --dev
 pipenv run pytest -vv

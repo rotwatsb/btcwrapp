@@ -11,6 +11,7 @@ pytest-flask = "*"
 requests = "*"
 flask = "*"
 waitress = "*"
+config2 = "*"
 
 [requires]
 python_version = "3.6"

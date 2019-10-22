@@ -6,12 +6,9 @@ services:
       - bitcoin-service
     networks:
       - test-network
-    ports:
-      - "8000:8000"
     environment:
       - RPC_USER
       - RPC_PASSWORD
-      - RPC_BITCOIN_HOST
     command: ["bash", "/project/docker/run_tests.sh"]
   bitcoin-service:
     image: "rotwatsb/bitcoin-service:latest"
